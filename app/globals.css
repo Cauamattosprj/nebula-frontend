@@ -18,3 +18,9 @@ body {
   color: var(--foreground);
   background: var(--background);
 }
+
+@layer {
+  .heading-text-gradient {
+    @apply bg-gradient-to-r from-white via-white to-[#141414] bg-clip-text text-transparent
+  }
+}
