@@ -1,9 +1,9 @@
-import Navbar from "@/components/navbar";
+import PomodoroCounter from "@/components/pomodoro-counter";
 
 export default function Home() {
     return (
         <>
-            <Navbar />
+        <PomodoroCounter />
         </>
     );
 }
