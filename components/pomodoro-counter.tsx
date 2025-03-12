@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "./button";
+import { Button } from "./button";
 
 const PomodoroCounter = () => {
     return (
@@ -22,7 +22,7 @@ const PomodoroCounter = () => {
             </div>
             {/* pomodoro cta */}
             <div className="flex justify-center">
-                <Button>adsasdadsa</Button>
+                <Button intent={"primary"}>Começar</Button>
             </div>
         </div>
     );
