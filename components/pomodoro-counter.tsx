@@ -4,7 +4,7 @@ import { Button } from "./button";
 const PomodoroCounter = () => {
     return (
         // main container
-        <div className="flex flex-col w-full text-center justify-center space-y-2">
+        <div className="flex flex-col w-full text-center justify-center space-y-2 my-16">
             {/* pomodoro title */}
             <div className="font-bold text-xl text-[#c6b6b6] text-center w-full ">
                 <span>Pronto para mais uma sessão de foco?</span>

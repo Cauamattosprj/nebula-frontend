@@ -19,8 +19,8 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="pt-br">
-            <body className={`${inter.className} antialiased py-4 px-4`}>
-                <nav className="mb-12">
+            <body>
+                <nav className={`${inter.className} antialiased py-4 px-4`}>
                     <Navbar />
                 </nav>
                 {children}

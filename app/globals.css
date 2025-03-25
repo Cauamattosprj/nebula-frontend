@@ -3,24 +3,34 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;  
+    /* #TODO: after the final style, create the white theme */
+    --background: #ffffff;
+    --foreground: #171717;
+    --tab: #f1f1f1;
+    --accent: #d08a57;
+    --title: #9fc0d5;
+    --paragraph: #c1c3c5;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+    :root {
+        --background: #01090e;
+        --foreground: #ededed;
+        --tab: #041621;
+    }
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
+    color: var(--foreground);
+    background: var(--background);
 }
 
 @layer {
-  .heading-text-gradient {
-    @apply bg-gradient-to-r from-white via-white to-[#141414] bg-clip-text text-transparent
-  }
+    .heading-text-gradient {
+        @apply bg-gradient-to-r from-white via-white to-[#141414] bg-clip-text text-transparent;
+    }
+
+    .glowing-border {
+        @apply bg-gradient-to-r from-transparent via-white to-transparent h-[1px];
+    }
 }
