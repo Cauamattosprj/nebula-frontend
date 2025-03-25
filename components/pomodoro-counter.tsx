@@ -6,13 +6,13 @@ const PomodoroCounter = () => {
         // main container
         <div className="flex flex-col w-full text-center justify-center space-y-2 my-16">
             {/* pomodoro title */}
-            <div className="font-bold text-xl text-[#c6b6b6] text-center w-full ">
+            <div className="font-bold text-xl text-title text-center w-full ">
                 <span>Pronto para mais uma sessão de foco?</span>
             </div>
             {/* timer */}
             <div className="flex flex-col">
                 {/* pomodoro average focus time */}
-                <div className="font-extralight">
+                <div className="font-extralight text-paragraph">
                     Sua média de foco atual: 1 hora e 37 minutos
                 </div>
                 {/* pomodoro timer */}
