@@ -3,7 +3,9 @@ import React from "react";
 const NotebookBody = () => {
     return (
         <div className="px-12 py-8 flex flex-col space-y-8 min-h-screen">
+            {/* note title */}
             <h1 className="note-title text-title text-4xl font-bold">Herança</h1>
+            {/* note body */}
             <p className="note-body text-paragraph">
                 Herança é um conceito fundamental em programação orientada a
                 objetos. Ele permite a criação de uma nova classe que herda os
