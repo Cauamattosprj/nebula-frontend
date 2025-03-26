@@ -1,4 +1,11 @@
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
+import {
+    Home,
+    Settings,
+    Notebook,
+    AlarmClock,
+    ChartColumn,
+    CalendarIcon,
+} from "lucide-react";
 
 import {
     Sidebar,
@@ -14,27 +21,32 @@ import {
 // Menu items.
 const items = [
     {
-        title: "Home",
+        title: "Dashboard",
         url: "#",
         icon: Home,
     },
     {
-        title: "Inbox",
+        title: "Sessão",
         url: "#",
-        icon: Inbox,
+        icon: AlarmClock,
     },
     {
-        title: "Calendar",
+        title: "Caderno",
         url: "#",
-        icon: Calendar,
+        icon: Notebook,
     },
     {
-        title: "Search",
+        title: "Estatísticas",
         url: "#",
-        icon: Search,
+        icon: ChartColumn,
     },
     {
-        title: "Settings",
+        title: "Calendário",
+        url: "#",
+        icon: CalendarIcon,
+    },
+    {
+        title: "Configuração",
         url: "#",
         icon: Settings,
     },
@@ -44,23 +56,6 @@ export function AppSidebar() {
     return (
         <Sidebar side="left" variant="floating">
             <SidebarContent className="bg-tab text-white">
-                <SidebarGroup>
-                    <SidebarGroupLabel>Application</SidebarGroupLabel>
-                    <SidebarGroupContent>
-                        <SidebarMenu>
-                            {items.map((item) => (
-                                <SidebarMenuItem key={item.title}>
-                                    <SidebarMenuButton asChild>
-                                        <a href={item.url}>
-                                            <item.icon />
-                                            <span>{item.title}</span>
-                                        </a>
-                                    </SidebarMenuButton>
-                                </SidebarMenuItem>
-                            ))}
-                        </SidebarMenu>
-                    </SidebarGroupContent>
-                </SidebarGroup>
                 <SidebarGroup>
                     <SidebarGroupLabel>Application</SidebarGroupLabel>
                     <SidebarGroupContent>
