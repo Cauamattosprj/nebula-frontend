@@ -12,13 +12,23 @@ export default {
 			colors: {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
-				tab: 'var(--tab)',
+				tab: {
+					100: "#cdd0d3",
+					200: "#9ba2a6",
+					300: "#68737a",
+					400: "#36454d",
+					500: "#041621",
+					600: "#03121a",
+					700: "#020d14",
+					800: "#02090d",
+					900: "#010407"
+				},
 				accent: {
 					DEFAULT: 'var(--accent)',
 					foreground: 'var(--accent-foreground)'
 				},
-				title: '#9fc0d5',
-				paragraph: '#c1c3c5',
+				title: 'var(--title)',
+				paragraph: 'var(--paragraph)',
 				card: {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
