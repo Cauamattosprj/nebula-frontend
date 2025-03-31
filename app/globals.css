@@ -6,9 +6,8 @@
     /* #TODO: after the final style, create the white theme */
     --background: #ffffff;
     --foreground: #171717;
-    --tab: #f1f1f1;
     --accent: #38bce8;
-    --accent-foreground: #d08a57;
+    --accent-foreground: #0b3f50;
     --title: #9fc0d5;
     --paragraph: #c1c3c5;
 }
@@ -33,6 +32,10 @@ body {
 
     .glowing-border {
         @apply bg-gradient-to-r from-transparent via-white to-transparent h-[1px];
+    }
+
+    .side-btn {
+        @apply hover:bg-white/10 hover:text-white !important
     }
 }
 
