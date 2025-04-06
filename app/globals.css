@@ -35,7 +35,11 @@ body {
     }
 
     .side-btn {
-        @apply hover:bg-white/10 hover:text-white !important
+        @apply hover:bg-white/10 hover:text-white !important;
+    }
+
+    .side-btn-active {
+        @apply bg-accent-foreground text-white !important;
     }
 }
 

@@ -1,3 +1,5 @@
+"use client"
+
 import {
     Home,
     Settings,
@@ -8,6 +10,8 @@ import {
     ChevronDown,
     PlusIcon,
 } from "lucide-react";
+
+import { usePathname } from "next/navigation";
 
 import {
     Sidebar,
@@ -34,7 +38,7 @@ import { Separator } from "../ui/separator";
 const items = [
     {
         title: "Dashboard",
-        url: "#",
+        url: "/",
         icon: Home,
     },
     {
@@ -89,6 +93,8 @@ const USER_SESSION_COOKIES = [
     },
 ];
 export function AppSidebar() {
+    const pathname = usePathname();
+
     return (
         <Sidebar side="left" variant="floating">
             <SidebarContent className="bg-tab-800 text-white justify-between py-6">
@@ -96,16 +102,22 @@ export function AppSidebar() {
                     {/* <SidebarGroupLabel>Nebula</SidebarGroupLabel> */}
                     <SidebarGroupContent>
                         <SidebarMenu>
-                            {items.map((item) => (
+                            {items.map((item) => {
+                                const isActive = pathname === item.url;
+
+                                return (
                                 <SidebarMenuItem key={item.title}>
                                     <SidebarMenuButton asChild>
-                                        <a href={item.url} className="side-btn">
+                                        <a 
+                                        href={item.url} 
+                                        className={`${isActive ? "side-btn-active" : "side-btn"}`}>
                                             <item.icon />
                                             <span>{item.title}</span>
                                         </a>
                                     </SidebarMenuButton>
                                 </SidebarMenuItem>
-                            ))}
+                                );
+                                })}
                         </SidebarMenu>
                     </SidebarGroupContent>
                 </SidebarGroup>
