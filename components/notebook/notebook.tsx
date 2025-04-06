@@ -21,7 +21,7 @@ import NotebookBody from './notebook-body';
 
 const Notebook = () => {
     return (
-        <div className="bg-tab-500 ">
+        <div className="bg-tab-500 relative">
             <NotebookHeader />
             <NotebookBody />
         </div>
