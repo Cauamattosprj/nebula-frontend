@@ -2,7 +2,6 @@
 
 import {
     ArrowUpNarrowWide,
-    ChevronDown,
     ChevronRight,
     Edit,
     FolderPlus,
@@ -10,7 +9,7 @@ import {
     Menu,
     SidebarClose,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 const foldersData = {
     data: [
@@ -94,6 +93,26 @@ const foldersData = {
 const NotebookSidebar = () => {
     const [openNotebookSidebar, setOpenNotebookSidebar] = useState(false);
     const [openFolders, setOpenFolders] = useState<Record<string, boolean>>({});
+    const sidebarRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (
+                sidebarRef.current &&
+                !sidebarRef.current.contains(event.target as Node)
+            ) {
+                setOpenNotebookSidebar(!openNotebookSidebar);
+            }
+        };
+
+        if (openNotebookSidebar) {
+            document.addEventListener("mousedown", handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [openNotebookSidebar]);
 
     const toggleFolder = (folderId: string) => {
         setOpenFolders((prev) => ({
@@ -105,15 +124,19 @@ const NotebookSidebar = () => {
     return (
         <div>
             {/* open sidebar trigger */}
-            <Menu
+            <div
+                className="notebook-header-btn hover:cursor-pointer hover:bg-tab-400 hover:text-white p-1 rounded-xl transition-all duration-75"
                 onClick={() => setOpenNotebookSidebar(!openNotebookSidebar)}
-            />
+            >
+                <Menu />
+            </div>
 
             {/* bg-overlay */}
             <div
                 className={`${
                     openNotebookSidebar ? "bg-black/60 inset-0 absolute " : ""
                 } bg-black/00 transition-all duration-500`}
+                onClick={() => setOpenNotebookSidebar(!openNotebookSidebar)}
             ></div>
 
             {/* sidebar */}
@@ -124,6 +147,7 @@ const NotebookSidebar = () => {
             >
                 {/* sidebar content */}
                 <div
+                    ref={sidebarRef}
                     className="bg-tab-500 h-[100%] absolute inset-0 mt-[0.5px] w-52 
                 border-r shadow-xl shadow-black"
                 >
@@ -152,7 +176,11 @@ const NotebookSidebar = () => {
                                                 toggleFolder(folder.id)
                                             }
                                         >
-                                            <ChevronRight className={`${isOpen ? 'rotate-90' : ''} transition-all duration-75`} />
+                                            <ChevronRight
+                                                className={`${
+                                                    isOpen ? "rotate-90" : ""
+                                                } transition-all duration-75`}
+                                            />
                                             <span>{folder.title}</span>
                                         </div>
 
