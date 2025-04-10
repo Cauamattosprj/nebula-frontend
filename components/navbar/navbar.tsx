@@ -1,13 +1,12 @@
 import { Sun } from "lucide-react";
 import React from "react";
-import { SidebarTrigger } from "../ui/sidebar";
 
 const Navbar = () => {
     return (
         <nav className="flex relative justify-between items-center px-4 bg-gradient-to-r from-[#383838] to-[#1A1A1A] text-center py-2 rounded-full border-[1px] border-white">
             {/* left */}
             <div className="absolute left-4">
-                <SidebarTrigger />
+                ...
             </div>
             {/* center */}
             <span className="text-xl flex-1 font-bold">Nebula</span>

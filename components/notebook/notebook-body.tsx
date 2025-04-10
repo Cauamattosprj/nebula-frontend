@@ -4,9 +4,15 @@ const NotebookBody = () => {
     return (
         <div className="px-12 py-8 flex flex-col space-y-8 min-h-screen">
             {/* note title */}
-            <h1 className="note-title text-title text-4xl font-bold">Herança</h1>
+            <h1 className="note-title text-title text-4xl font-bold">
+                Herança
+            </h1>
             {/* note body */}
-            <p className="note-body text-paragraph">
+            <textarea
+                name=""
+                id=""
+                className="note-body text-paragraph min-h-screen bg-transparent focus:border-none focus:outline-none focus:ring-0"
+            >
                 Herança é um conceito fundamental em programação orientada a
                 objetos. Ele permite a criação de uma nova classe que herda os
                 atributos e métodos de uma classe existente. A nova classe é
@@ -21,7 +27,7 @@ const NotebookBody = () => {
                 representada por uma linha sólida com uma seta apontando para a
                 superclasse. A subclasse é representada por uma linha tracejada
                 com uma seta apontando para a superclasse.
-            </p>
+            </textarea>
         </div>
     );
 };
