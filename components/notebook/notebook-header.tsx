@@ -10,9 +10,7 @@ const NotebookHeader = () => {
                 <div>
                     <NotebookSidebar />
                 </div>
-                <div className="folder-title text-center glowing text-title p-12  ">
-                    POO/Herança
-                </div>
+                <input className="folder-title text-center glowing text-title p-8 bg-transparent focus:outline-none focus:border-none focus:ring-0" defaultValue={"POO/Herança"}/>
                 <div>
                     <MoreVertical />
                 </div>
