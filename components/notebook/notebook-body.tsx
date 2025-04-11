@@ -1,12 +1,15 @@
 import React from "react";
 
 const NotebookBody = () => {
+
+
     return (
         <div className="px-12 py-8 flex flex-col space-y-8 min-h-screen">
             {/* note title */}
-            <h1 className="note-title text-title text-4xl font-bold">
-                Herança
-            </h1>
+            <input
+                className="note-title text-title text-4xl font-bold folder-title text-left glowing bg-transparent focus:outline-none focus:border-none focus:ring-0"
+                defaultValue={"Herança"}
+            />
             {/* note body */}
             <textarea
                 name=""
