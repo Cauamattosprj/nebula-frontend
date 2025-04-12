@@ -12,9 +12,37 @@ import {
 import { useState, useRef, useEffect } from "react";
 
 const NotebookSidebar = () => {
+    const [allNotesWithoutFolders, setAllNotesWithoutFolders] = useState([{}]);
     const [openNotebookSidebar, setOpenNotebookSidebar] = useState(false);
     const [openFolders, setOpenFolders] = useState<Record<string, boolean>>({});
     const sidebarRef = useRef<HTMLDivElement>(null);
+
+    const fetchAllNotesWithoutFolders = async () => {
+        const notesWithoutFolders = await getAllNotesWithoutFolders();
+        setAllNotesWithoutFolders(notesWithoutFolders.data);
+    };
+
+    useEffect(() => {
+        fetchAllNotesWithoutFolders();
+    }, []);
+
+    useEffect(() => {
+        fetchAllNotesWithoutFolders()
+    }, [createNote])
+
+    const handleCreateNote = async () => {
+        await withToastFeedback(
+            createNote(
+                "Nova anotação",
+                "Uma anotação vazia...",
+                "57282eb4-302e-4d0f-8098-8242f0b79cdb"
+            ),
+            "Nota criada com sucesso",
+            "Falha ao criar a nota"
+        );
+
+        await fetchAllNotesWithoutFolders();
+    };
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
