@@ -1,5 +1,9 @@
 "use client";
 
+import { createNote } from "@/lib/api/notes/create-note";
+import { getAllNotesWithoutFolders } from "@/lib/api/notes/get-all-notes-without-folders";
+import { getAllFolders } from "@/lib/nebula-backend-mock";
+import { withToastFeedback } from "@/lib/ui/feedback/with-toast-feedback";
 import {
     ArrowUpNarrowWide,
     ChevronRight,
@@ -102,7 +106,10 @@ const NotebookSidebar = () => {
                 >
                     {/* sidebar action buttons */}
                     <div className="flex text-white justify-center gap-x-8 p-4 border-b">
-                        <Edit className="w-6 h-6" />
+                        <Edit
+                            className="w-6 h-6"
+                            onClick={() => handleCreateNote()}
+                        />
                         <FolderPlus className="w-6 h-6" />
                         <ArrowUpNarrowWide className="w-6 h-6" />
                         <FoldVertical className="w-6 h-6" />
@@ -110,9 +117,8 @@ const NotebookSidebar = () => {
 
                     {/* folders and notes */}
                     <div>
-                        {foldersData.data.map((folder) => {
+                        {getAllFolders.data.map((folder) => {
                             const isOpen = openFolders[folder.id];
-
                             return (
                                 <div
                                     key={folder.id}
@@ -137,11 +143,11 @@ const NotebookSidebar = () => {
                                             <div className="ml-3 bg-accent-foreground w-[0.5px] flex flex-col">
                                                 {folder.notes.map((note) => (
                                                     <div
-                                                        key={note.id}
+                                                        key={note.id || ""}
                                                         className="text-white flex py-1 px-6"
                                                     >
                                                         <span className="text-nowrap">
-                                                            {note.title}
+                                                            {note.title || ""}
                                                         </span>
                                                     </div>
                                                 ))}
@@ -151,10 +157,18 @@ const NotebookSidebar = () => {
                                 </div>
                             );
                         })}
-                        {/* <div className="text-white flex p-2">
-                            <ChevronRight />
-                            <span>POO</span>
-                        </div> */}
+                        {allNotesWithoutFolders.map((note) => {
+                            return (
+                                <div
+                                    key={note.id || ""}
+                                    className="text-white flex py-1 px-6"
+                                >
+                                    <span className="text-nowrap">
+                                        {note.title || ""}
+                                    </span>
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
 
