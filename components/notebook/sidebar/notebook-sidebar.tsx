@@ -4,6 +4,9 @@ import { createNote } from "@/lib/api/notes/create-note";
 import { getAllNotesWithoutFolders } from "@/lib/api/notes/get-all-notes-without-folders";
 import { getAllFolders } from "@/lib/nebula-backend-mock";
 import { withToastFeedback } from "@/lib/ui/feedback/with-toast-feedback";
+import { useCurrentOpenNoteStore } from "@/store/note";
+import { Note } from "@/types/note";
+import { UUID } from "crypto";
 import {
     ArrowUpNarrowWide,
     ChevronRight,
@@ -16,10 +19,21 @@ import {
 import { useState, useRef, useEffect } from "react";
 
 const NotebookSidebar = () => {
-    const [allNotesWithoutFolders, setAllNotesWithoutFolders] = useState([{}]);
+    const [allNotesWithoutFolders, setAllNotesWithoutFolders] = useState<Note[]>([]);
     const [openNotebookSidebar, setOpenNotebookSidebar] = useState(false);
     const [openFolders, setOpenFolders] = useState<Record<string, boolean>>({});
+    const [noteId, setNoteId] = useState<UUID>();
+    const {
+        setCurrentOpenNoteId,
+        setCurrentOpenNote,
+    } = useCurrentOpenNoteStore();
     const sidebarRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (noteId) {
+            setCurrentOpenNote(noteId);
+        }
+    }, [noteId, setCurrentOpenNote]);
 
     const fetchAllNotesWithoutFolders = async () => {
         const notesWithoutFolders = await getAllNotesWithoutFolders();
@@ -31,11 +45,11 @@ const NotebookSidebar = () => {
     }, []);
 
     useEffect(() => {
-        fetchAllNotesWithoutFolders()
-    }, [createNote])
+        fetchAllNotesWithoutFolders();
+    }, [createNote]);
 
     const handleCreateNote = async () => {
-        await withToastFeedback(
+        const response = await withToastFeedback(
             createNote(
                 "Nova anotação",
                 "Uma anotação vazia...",
@@ -45,7 +59,13 @@ const NotebookSidebar = () => {
             "Falha ao criar a nota"
         );
 
+        const createdNoteId = response.data.id;
+
+        setCurrentOpenNoteId(createdNoteId);
+
         await fetchAllNotesWithoutFolders();
+
+        setNoteId(createdNoteId);
     };
 
     useEffect(() => {
