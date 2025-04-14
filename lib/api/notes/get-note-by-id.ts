@@ -1,3 +1,4 @@
+import { SingleNoteApiResponse } from "@/types/note";
 import { UUID } from "crypto";
 
 export const getNoteById = async (id: UUID) => {
@@ -11,5 +12,7 @@ export const getNoteById = async (id: UUID) => {
         return null;
     }
 
-    return await response.json()
+    const responseBody: SingleNoteApiResponse = await response.json()
+
+    return responseBody.data
 }
