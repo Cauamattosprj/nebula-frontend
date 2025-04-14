@@ -2,10 +2,11 @@
 
 import { createNote } from "@/lib/api/notes/create-note";
 import { getAllNotesWithoutFolders } from "@/lib/api/notes/get-all-notes-without-folders";
-import { getAllFolders } from "@/lib/nebula-backend-mock";
+import { getAllFolders } from "@/lib/api/folders/get-all-folders";
 import { withToastFeedback } from "@/lib/ui/feedback/with-toast-feedback";
 import { useCurrentOpenNoteStore } from "@/store/note";
-import { Note } from "@/types/note";
+import { Folder, FolderAPIResponse } from "@/types/folder";
+import { Note, NoteApiResponse } from "@/types/note";
 import { UUID } from "crypto";
 import {
     ArrowUpNarrowWide,
@@ -19,14 +20,14 @@ import {
 import { useState, useRef, useEffect } from "react";
 
 const NotebookSidebar = () => {
-    const [allNotesWithoutFolders, setAllNotesWithoutFolders] = useState<Note[]>([]);
+    const [allNotesWithoutFolders, setAllNotesWithoutFolders] =
+        useState<NoteApiResponse>();
+    const [allFolders, setAllFolders] = useState<FolderAPIResponse>();
     const [openNotebookSidebar, setOpenNotebookSidebar] = useState(false);
     const [openFolders, setOpenFolders] = useState<Record<string, boolean>>({});
     const [noteId, setNoteId] = useState<UUID>();
-    const {
-        setCurrentOpenNoteId,
-        setCurrentOpenNote,
-    } = useCurrentOpenNoteStore();
+    const { setCurrentOpenNoteId, setCurrentOpenNote } =
+        useCurrentOpenNoteStore();
     const sidebarRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -37,10 +38,16 @@ const NotebookSidebar = () => {
 
     const fetchAllNotesWithoutFolders = async () => {
         const notesWithoutFolders = await getAllNotesWithoutFolders();
-        setAllNotesWithoutFolders(notesWithoutFolders.data);
+        setAllNotesWithoutFolders(notesWithoutFolders);
+    };
+
+    const fetchAllFolders = async () => {
+        const allFolders = await getAllFolders();
+        setAllFolders(allFolders);
     };
 
     useEffect(() => {
+        fetchAllFolders();
         fetchAllNotesWithoutFolders();
     }, []);
 
@@ -51,7 +58,7 @@ const NotebookSidebar = () => {
     const handleCreateNote = async () => {
         const response = await withToastFeedback(
             createNote(
-                "Nova anotação",
+                "Nova anotação com um imeeeeeeeeeeeeeeeeeeeeeeeenso titulo",
                 "Uma anotação vazia...",
                 "57282eb4-302e-4d0f-8098-8242f0b79cdb"
             ),
@@ -60,12 +67,11 @@ const NotebookSidebar = () => {
         );
 
         const createdNoteId = response.data.id;
-
         setCurrentOpenNoteId(createdNoteId);
-
         await fetchAllNotesWithoutFolders();
-
         setNoteId(createdNoteId);
+
+        setOpenNotebookSidebar(false);
     };
 
     useEffect(() => {
@@ -137,58 +143,67 @@ const NotebookSidebar = () => {
 
                     {/* folders and notes */}
                     <div>
-                        {getAllFolders.data.map((folder) => {
-                            const isOpen = openFolders[folder.id];
-                            return (
-                                <div
-                                    key={folder.id}
-                                    className="text-white flex flex-col p-2"
-                                >
-                                    <div className="flex flex-col justify-center">
-                                        <div
-                                            className="flex items-center gap-1 cursor-pointer"
-                                            onClick={() =>
-                                                toggleFolder(folder.id)
-                                            }
-                                        >
-                                            <ChevronRight
-                                                className={`${
-                                                    isOpen ? "rotate-90" : ""
-                                                } transition-all duration-75`}
-                                            />
-                                            <span>{folder.title}</span>
-                                        </div>
-
-                                        {isOpen && (
-                                            <div className="ml-3 bg-accent-foreground w-[0.5px] flex flex-col">
-                                                {folder.notes.map((note) => (
-                                                    <div
-                                                        key={note.id || ""}
-                                                        className="text-white flex py-1 px-6"
-                                                    >
-                                                        <span className="text-nowrap">
-                                                            {note.title || ""}
-                                                        </span>
-                                                    </div>
-                                                ))}
+                        {allFolders?.data.map((folder) => {
+                                const isOpen = openFolders[folder.id];
+                                return (
+                                    <div
+                                        key={folder.id}
+                                        className="text-white flex flex-col p-2"
+                                    >
+                                        <div className="flex flex-col justify-center">
+                                            <div
+                                                className="flex items-center gap-1 cursor-pointer"
+                                                onClick={() =>
+                                                    toggleFolder(folder.id)
+                                                }
+                                            >
+                                                <ChevronRight
+                                                    className={`${
+                                                        isOpen
+                                                            ? "rotate-90"
+                                                            : ""
+                                                    } transition-all duration-75`}
+                                                />
+                                                <span>{folder.title}</span>
                                             </div>
-                                        )}
+
+                                            {isOpen && (
+                                                <div className="ml-3 bg-accent-foreground w-[0.5px] flex flex-col">
+                                                    {folder.notes.map(
+                                                        (note) => (
+                                                            <div
+                                                                key={
+                                                                    note.id ||
+                                                                    ""
+                                                                }
+                                                                className="text-white flex py-1 px-6"
+                                                            >
+                                                                <span className="text-nowrap">
+                                                                    {note.title ||
+                                                                        ""}
+                                                                </span>
+                                                            </div>
+                                                        )
+                                                    )}
+                                                </div>
+                                            )}
+                                        </div>
                                     </div>
-                                </div>
-                            );
-                        })}
-                        {allNotesWithoutFolders.map((note) => {
-                            return (
-                                <div
-                                    key={note.id || ""}
-                                    className="text-white flex py-1 px-6"
-                                >
-                                    <span className="text-nowrap">
-                                        {note.title || ""}
-                                    </span>
-                                </div>
-                            );
-                        })}
+                                );
+                            })}
+                        {allNotesWithoutFolders?.data.map((note) => {
+                                return (
+                                    <div
+                                        key={note.id || ""}
+                                        className="text-white flex py-1 px-6"
+                                    >
+                                        {/* #TODO add a popup showing the complete name of the note when mouse hover */}
+                                        <span className="truncate">
+                                            {note.title || ""}
+                                        </span>
+                                    </div>
+                                );
+                            })}
                     </div>
                 </div>
 
