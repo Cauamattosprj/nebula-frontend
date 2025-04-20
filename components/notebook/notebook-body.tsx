@@ -34,13 +34,16 @@ const NotebookBody = () => {
                 ref={titleRef}
                 onInput={handleTitleInput}
                 className="note-title text-title text-4xl w-full font-bold text-left bg-transparent focus:outline-none resize-none overflow-hidden"
-                defaultValue={currentOpenNote?.title ?? ""}
+                value={currentOpenNote?.title ?? ""}
+                // onChange={() => {}}
                 rows={1}
             />
 
             {/* note body */}
             <textarea
-                defaultValue={currentOpenNote?.body ?? ""}
+                value={currentOpenNote?.body ?? ""}
+                // #TODO agora com o value, eu preciso arrumar uma forma de atualizar o container conforme eu digito
+                // onChange={() => {}}
                 className="note-body text-paragraph min-h-screen bg-transparent focus:border-none focus:outline-none focus:ring-0"
             />
         </div>
