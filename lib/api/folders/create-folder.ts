@@ -1,4 +1,4 @@
-export const createNote = async (title: string) => {
+export const createFolder = async (title: string) => {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/folders/create`, {
         headers: {
             "Content-Type": "application/json"
