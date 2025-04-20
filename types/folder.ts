@@ -1,7 +1,8 @@
+import { UUID } from "crypto";
 import { Note } from "./note";
 
 export interface Folder {
-    id: string;
+    id: UUID;
     title: string;
     notes: Note[];
     createdAt: Date;
