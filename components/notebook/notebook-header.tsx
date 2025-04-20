@@ -1,8 +1,13 @@
+"use client"
+
 import { Menu, MoreVertical } from "lucide-react";
 import React from "react";
 import NotebookSidebar from "./sidebar/notebook-sidebar";
+import { useCurrentOpenNoteStore } from "@/store/note";
 
 const NotebookHeader = () => {
+    const currentOpenNote = useCurrentOpenNoteStore().currentOpenNote;
+    console.log("CurrentOpenNote: ", currentOpenNote)
     return (
         <>
             <div className="glowing-border"></div>
@@ -10,7 +15,10 @@ const NotebookHeader = () => {
                 <div>
                     <NotebookSidebar />
                 </div>
-                <input className="folder-title text-center glowing text-title p-8 bg-transparent focus:outline-none focus:border-none focus:ring-0" defaultValue={"POO/Herança"}/>
+                <input
+                    className="folder-title text-center glowing text-title p-8 bg-transparent focus:outline-none focus:border-none focus:ring-0"
+                    value={currentOpenNote?.folder?.title || "Sem pasta"}
+                />
                 <div>
                     <MoreVertical />
                 </div>
