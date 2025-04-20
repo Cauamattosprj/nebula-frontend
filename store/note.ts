@@ -17,5 +17,13 @@ export const useCurrentOpenNoteStore = create<CurrentOpenNoteStore>((set) => ({
     setCurrentOpenNote: async (id) => {
         const noteData = await getNoteById(id);
         set({ currentOpenNote: noteData });
-    }
+    },
+    setCurrentNoteBody: (newBody: string) =>
+        set((state) => ({
+            currentOpenNote: {
+                ...state.currentOpenNote,
+                body: newBody,
+            },
+        })),
+
 }))
