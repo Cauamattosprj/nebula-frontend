@@ -1,10 +1,12 @@
 import { UUID } from "crypto"
+import { Folder } from "./folder";
 
 export interface Note {
     id: UUID;
     title: string;
     body: string;
     userId: UUID;
+    folder?: Folder;
     createdAt: Date;
     deleted: boolean;
 }
