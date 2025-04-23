@@ -4,7 +4,7 @@ import { createNote } from "@/lib/api/notes/create-note";
 import { getAllNotesWithoutFolders } from "@/lib/api/notes/get-all-notes-without-folders";
 import { getAllFolders } from "@/lib/api/folders/get-all-folders";
 import { withToastFeedback } from "@/lib/ui/feedback/with-toast-feedback";
-import { useCurrentOpenNoteStore } from "@/store/note";
+import { useCurrentOpenNoteStore } from "@/store/currentOpenNoteStore";
 import { FolderAPIResponse } from "@/types/folder";
 import { NoteApiResponse } from "@/types/note";
 import { UUID } from "crypto";
@@ -23,6 +23,7 @@ import handleDragEnter from "@/lib/events/drag-n-drop/handle-drag-enter";
 import handleDragLeave from "@/lib/events/drag-n-drop/handle-drag-leave";
 import handleDrop from "@/lib/events/drag-n-drop/handle-drop";
 import handleDragStart from "@/lib/events/drag-n-drop/handle-drag-start";
+import { moveNoteToFolder } from "@/lib/api/notes/move-note-to-folder";
 
 const NotebookSidebar = () => {
     const [allNotesWithoutFolders, setAllNotesWithoutFolders] =
@@ -192,9 +193,21 @@ const NotebookSidebar = () => {
                                         await fetchAllNotesWithoutFolders();
                                     }}
                                     onDrop={(e) => {
-                                        handleDrop(e, folder.id);
+                                        // handleDrop(e, folder.id);
                                         setHoveredFolderId(null);
                                         console.log("handleDrop");
+                                        const movedNoteId =
+                                            e.dataTransfer.getData(
+                                                "text/plain"
+                                            ) as UUID;
+                                        withToastFeedback(
+                                            moveNoteToFolder(
+                                                movedNoteId,
+                                                folder.id
+                                            ),
+                                            "Nota movida com sucesso",
+                                            "Falha ao mover a nota"
+                                        );
                                     }}
                                 >
                                     <div className="flex flex-col justify-center">
