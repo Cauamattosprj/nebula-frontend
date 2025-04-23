@@ -1,4 +1,4 @@
-import { moveNoteToFolder } from "@/lib/api/notes/move-note-to-folder";
+import { moveNoteToFolder } from "@/lib/api/services/notes/move-note-to-folder";
 import { UUID } from "crypto";
 import React from "react";
 

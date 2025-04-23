@@ -1,8 +1,8 @@
 "use client";
 
-import { createNote } from "@/lib/api/notes/create-note";
-import { getAllNotesWithoutFolders } from "@/lib/api/notes/get-all-notes-without-folders";
-import { getAllFolders } from "@/lib/api/folders/get-all-folders";
+import { createNote } from "@/lib/api/services/notes/create-note";
+import { getAllNotesWithoutFolders } from "@/lib/api/services/notes/get-all-notes-without-folders";
+import { getAllFolders } from "@/lib/api/services/folders/get-all-folders";
 import { withToastFeedback } from "@/lib/ui/feedback/with-toast-feedback";
 import { useCurrentOpenNoteStore } from "@/store/currentOpenNoteStore";
 import { FolderAPIResponse } from "@/types/folder";
@@ -18,12 +18,12 @@ import {
     SidebarClose,
 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
-import { createFolder } from "@/lib/api/folders/create-folder";
+import { createFolder } from "@/lib/api/services/folders/create-folder";
 import handleDragEnter from "@/lib/events/drag-n-drop/handle-drag-enter";
 import handleDragLeave from "@/lib/events/drag-n-drop/handle-drag-leave";
 import handleDrop from "@/lib/events/drag-n-drop/handle-drop";
 import handleDragStart from "@/lib/events/drag-n-drop/handle-drag-start";
-import { moveNoteToFolder } from "@/lib/api/notes/move-note-to-folder";
+import { moveNoteToFolder } from "@/lib/api/services/notes/move-note-to-folder";
 
 const NotebookSidebar = () => {
     const [allNotesWithoutFolders, setAllNotesWithoutFolders] =

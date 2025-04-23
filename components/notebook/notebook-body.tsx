@@ -8,9 +8,12 @@ const NotebookBody = () => {
         (state) => state.currentOpenNote
     );
 
-    const titleRef = useRef<HTMLTextAreaElement>(null);
+    const setCurrentNoteBody = useCurrentOpenNoteStore(
+        (state) => state.setCurrentNoteBody
+    );
 
-    // hooks for auto resizing
+    // hook for auto resizing the title height
+    const titleRef = useRef<HTMLTextAreaElement>(null);
     useEffect(() => {
         const el = titleRef.current;
         if (el) {
@@ -18,6 +21,7 @@ const NotebookBody = () => {
             el.style.height = el.scrollHeight + "px";
         }
     }, [currentOpenNote?.title]);
+
     const handleTitleInput = () => {
         const el = titleRef.current;
         if (el) {
@@ -26,24 +30,28 @@ const NotebookBody = () => {
         }
     };
 
+    const handleBodyChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        const value = e.target.value;
+        setCurrentNoteBody(value);
+    };
+
     return (
-        // TODO: Define the correct height for this container based on the number of items in the notebook sidebar
         <div className="px-12 py-8 flex flex-col space-y-8 h-[3000px]">
+            {/* the Note contents comes from zustand as a global state, so, for any changes on note body is necessary to modifies the useCurrentOpenNoteStore file that is imported on the top of this file */}
+
             {/* note title */}
             <textarea
                 ref={titleRef}
                 onInput={handleTitleInput}
                 className="note-title text-title text-4xl w-full font-bold text-left bg-transparent focus:outline-none resize-none overflow-hidden"
                 value={currentOpenNote?.title ?? ""}
-                // onChange={() => {}}
                 rows={1}
             />
 
             {/* note body */}
             <textarea
                 value={currentOpenNote?.body ?? ""}
-                // #TODO agora com o value, eu preciso arrumar uma forma de atualizar o container conforme eu digito
-                // onChange={() => {}}
+                onChange={handleBodyChange}
                 className="note-body text-paragraph min-h-screen bg-transparent focus:border-none focus:outline-none focus:ring-0"
             />
         </div>
