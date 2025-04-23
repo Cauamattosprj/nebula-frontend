@@ -1,6 +1,6 @@
 "use client";
 
-import { useCurrentOpenNoteStore } from "@/store/note";
+import { useCurrentOpenNoteStore } from "@/store/currentOpenNoteStore";
 import { useEffect, useRef } from "react";
 
 const NotebookBody = () => {
