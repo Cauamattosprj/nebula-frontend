@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
 import { Menu, MoreVertical } from "lucide-react";
 import React from "react";
 import NotebookSidebar from "./sidebar/notebook-sidebar";
-import { useCurrentOpenNoteStore } from "@/store/note";
+import { useCurrentOpenNoteStore } from "@/store/currentOpenNoteStore";
 
 const NotebookHeader = () => {
     const currentOpenNote = useCurrentOpenNoteStore().currentOpenNote;
-    console.log("CurrentOpenNote: ", currentOpenNote)
+    console.log("CurrentOpenNote: ", currentOpenNote);
     return (
         <>
             <div className="glowing-border"></div>
