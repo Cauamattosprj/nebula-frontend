@@ -7,7 +7,6 @@ import { useCurrentOpenNoteStore } from "@/store/currentOpenNoteStore";
 
 const NotebookHeader = () => {
     const currentOpenNote = useCurrentOpenNoteStore().currentOpenNote;
-    console.log("CurrentOpenNote: ", currentOpenNote);
     return (
         <>
             <div className="glowing-border"></div>
