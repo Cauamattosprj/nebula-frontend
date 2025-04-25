@@ -4,7 +4,7 @@ import { Folder } from "./folder";
 export interface Note {
     id: UUID;
     title: string;
-    body: string;
+    body: string | undefined;
     userId: UUID;
     folder?: Folder;
     createdAt: Date;
