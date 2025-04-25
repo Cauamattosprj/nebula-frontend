@@ -1,3 +1,4 @@
+import { updateNoteById } from './../lib/api/services/notes/update-note-by-id';
 import { getNoteById } from '@/lib/api/services/notes/get-note-by-id'
 import { Note } from '@/types/note';
 import { UUID } from 'crypto';
@@ -8,10 +9,10 @@ interface CurrentOpenNoteStore {
     currentOpenNote: Note | null;
     setCurrentOpenNoteId: (id: UUID) => void;
     setCurrentOpenNote: (id: UUID) => Promise<void>;
-    setCurrentNoteBody: (newBody: string) => void;
+    updateCurrentOpenNoteBody: (newBody: string) => void;
 }
 
-export const useCurrentOpenNoteStore = create<CurrentOpenNoteStore>((set) => ({
+export const useCurrentOpenNoteStore = create<CurrentOpenNoteStore>((set, get) => ({
     currentOpenNoteId: null,
     currentOpenNote: null,
     setCurrentOpenNoteId: (id) => set({ currentOpenNoteId: id }),
@@ -19,15 +20,15 @@ export const useCurrentOpenNoteStore = create<CurrentOpenNoteStore>((set) => ({
         const noteData = await getNoteById(id);
         set({ currentOpenNote: noteData });
     },
-    setCurrentNoteBody: (newBody: string) =>
-        set((state) => {
-            if (!state.currentOpenNote) return {};
+    updateCurrentOpenNoteBody: (newBody: string) => {
+        const currentNote = get().currentOpenNote;
+        if (!currentNote) return;
 
-            return {
-                currentOpenNote: {
-                    ...state.currentOpenNote,
-                    body: newBody,
-                },
-            };
-        }),
+        set({
+            currentOpenNote: {
+                ...currentNote,
+                body: newBody,
+            }
+        })
+    }
 }))

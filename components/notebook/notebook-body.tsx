@@ -1,13 +1,15 @@
 "use client";
 
 import { useCurrentOpenNoteStore } from "@/store/currentOpenNoteStore";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const NotebookBody = () => {
     const currentOpenNote = useCurrentOpenNoteStore(
         (state) => state.currentOpenNote
     );
-
+    const updateCurrentOpenNoteBody = useCurrentOpenNoteStore(
+        (state) => state.updateCurrentOpenNoteBody
+    );
     const setCurrentNoteBody = useCurrentOpenNoteStore(
         (state) => state.setCurrentNoteBody
     );
@@ -31,8 +33,8 @@ const NotebookBody = () => {
     };
 
     const handleBodyChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        const value = e.target.value;
-        setCurrentNoteBody(value);
+        const newValue = e.target.value;
+        updateCurrentOpenNoteBody(newValue);
     };
 
     return (
@@ -52,6 +54,7 @@ const NotebookBody = () => {
             <textarea
                 value={currentOpenNote?.body ?? ""}
                 onChange={handleBodyChange}
+                id="noteBody"
                 className="note-body text-paragraph min-h-screen bg-transparent focus:border-none focus:outline-none focus:ring-0"
             />
         </div>
