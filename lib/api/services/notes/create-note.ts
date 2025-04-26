@@ -1,4 +1,16 @@
-export const createNote = async (title, body, userId) => {
+import { UUID } from "crypto"
+
+interface CreateNoteProps {
+    title: string,
+    body: string,
+    userId: UUID,
+}
+
+export const createNote = async ({ title, body, userId }: CreateNoteProps) => {
+    if (!title) {
+        title = "Nova nota"
+    }
+
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/notes/create`, {
         headers: {
             "Content-Type": "application/json"
