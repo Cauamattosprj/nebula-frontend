@@ -9,7 +9,7 @@ interface CurrentOpenNoteStore {
     currentOpenNote: Note | null;
     setCurrentOpenNoteId: (id: UUID) => void;
     setCurrentOpenNote: (id: UUID) => Promise<void>;
-    updateCurrentOpenNoteBody: (newBody: string) => void;
+    updateCurrentOpenNoteBody: (newBody: string) => Promise<void>;
 }
 
 export const useCurrentOpenNoteStore = create<CurrentOpenNoteStore>((set, get) => ({
@@ -20,7 +20,7 @@ export const useCurrentOpenNoteStore = create<CurrentOpenNoteStore>((set, get) =
         const noteData = await getNoteById(id);
         set({ currentOpenNote: noteData });
     },
-    updateCurrentOpenNoteBody: (newBody: string) => {
+    updateCurrentOpenNoteBody: async (newBody: string) => {
         const currentNote = get().currentOpenNote;
         if (!currentNote) return;
 
@@ -30,5 +30,9 @@ export const useCurrentOpenNoteStore = create<CurrentOpenNoteStore>((set, get) =
                 body: newBody,
             }
         })
+
+        const updatedNote = await updateNoteById({id: currentNote.id, body: newBody})
+
+        console.log("Updated note: ", updatedNote);
     }
 }))
