@@ -65,11 +65,11 @@ const NotebookSidebar = () => {
 
     const handleCreateNote = async () => {
         const response = await withToastFeedback(
-            createNote(
-                "Nova anotação com um imeeeeeeeeeeeeeeeeeeeeeeeenso titulo",
-                "Uma anotação vazia...",
-                "57282eb4-302e-4d0f-8098-8242f0b79cdb"
-            ),
+            createNote({
+                body: "Nova anotação...",
+                title: "",
+                userId: "680d3a36-3ce0-8007-afbc-e60c80cb2f1b",
+            }),
             "Nota criada com sucesso",
             "Falha ao criar a nota"
         );
