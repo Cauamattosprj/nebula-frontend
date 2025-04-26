@@ -67,7 +67,6 @@ const NotebookSidebar = () => {
         const response = await withToastFeedback(
             createNote({
                 body: "Nova anotação...",
-                title: "",
                 userId: "680d3a36-3ce0-8007-afbc-e60c80cb2f1b",
             }),
             "Nota criada com sucesso",
@@ -90,7 +89,7 @@ const NotebookSidebar = () => {
 
     const handleCreateFolder = async () => {
         await withToastFeedback(
-            createFolder("Nova pasta 4"),
+            createFolder({}),
             "Pasta criada com sucesso",
             "Falha ao criar a nota"
         );

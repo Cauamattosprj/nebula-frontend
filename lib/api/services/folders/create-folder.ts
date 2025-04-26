@@ -1,4 +1,8 @@
-export const createFolder = async (title: string) => {
+interface CreateFolderProps {
+    title?: string,
+}
+
+export const createFolder = async ({ title = "Nova pasta" }: CreateFolderProps) => {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/folders/create`, {
         headers: {
             "Content-Type": "application/json"

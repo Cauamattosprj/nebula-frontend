@@ -1,15 +1,12 @@
 import { UUID } from "crypto"
 
 interface CreateNoteProps {
-    title: string,
+    title?: string,
     body: string,
     userId: UUID,
 }
 
-export const createNote = async ({ title, body, userId }: CreateNoteProps) => {
-    if (!title) {
-        title = "Nova nota"
-    }
+export const createNote = async ({ title = "Nova nota", body, userId }: CreateNoteProps) => {
 
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/notes/create`, {
         headers: {
