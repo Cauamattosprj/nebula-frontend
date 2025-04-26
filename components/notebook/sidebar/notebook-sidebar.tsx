@@ -152,7 +152,7 @@ const NotebookSidebar = () => {
                 {/* sidebar content */}
                 <div
                     ref={sidebarRef}
-                    className="bg-tab-500 h-[100%] absolute inset-0 mt-[0.5px] w-52 
+                    className="bg-tab-500 h-[100%] absolute inset-0 mt-[0.5px] w-64 
                 border-r shadow-xl shadow-black"
                 >
                     {/* sidebar action buttons */}
@@ -171,6 +171,7 @@ const NotebookSidebar = () => {
 
                     {/* folders and notes */}
                     <ul className="px-2">
+                        {/* folders */}
                         {allFolders?.data.map((folder) => {
                             const isOpen = openFolders[folder.id];
                             const isHovered = hoveredFolderId === folder.id;
@@ -178,7 +179,7 @@ const NotebookSidebar = () => {
                             return (
                                 <li
                                     key={folder.id}
-                                    className={`text-white flex flex-col mb-2 p-2 transition-all duration-75 ${
+                                    className={`text-white flex flex-col py-1 transition-all duration-75 rounded-xl ${
                                         isHovered
                                             ? "bg-muted/20 rounded-md"
                                             : ""
@@ -220,9 +221,9 @@ const NotebookSidebar = () => {
                                             <ChevronRight
                                                 className={`${
                                                     isOpen ? "rotate-90" : ""
-                                                } transition-all duration-75`}
+                                                } transition-all duration-75 text-gray-600 size-4`}
                                             />
-                                            <span>{folder.title}</span>
+                                            <span className="sidebar-title sidebar-folder-title text-tab-100">{folder.title}</span>
                                         </button>
 
                                         {isOpen && (
@@ -230,14 +231,14 @@ const NotebookSidebar = () => {
                                                 {folder.notes.map((note) => (
                                                     <button
                                                         key={note.id || ""}
-                                                        className="hover:bg-tab-400 hover:cursor-pointer rounded-md w-full transition-all duration-75 text-white flex py-1 px-6"
+                                                        className="hover:bg-tab-400 text-left hover:cursor-pointer rounded-md w-full transition-all duration-75 text-white flex py-1 px-6"
                                                         onClick={() =>
                                                             handleSelectNote(
                                                                 note.id
                                                             )
                                                         }
                                                     >
-                                                        <span className="truncate text-nowrap w-full">
+                                                        <span className="sidebar-title text-tab-100 truncate text-nowrap w-full">
                                                             {note.title || ""}
                                                         </span>
                                                     </button>
@@ -248,6 +249,8 @@ const NotebookSidebar = () => {
                                 </li>
                             );
                         })}
+
+                        {/* notes without folder */}
                         {allNotesWithoutFolders?.data.map((note, index) => {
                             return (
                                 <button
@@ -257,10 +260,10 @@ const NotebookSidebar = () => {
                                     onDragStart={(e) =>
                                         handleDragStart(e, note.id)
                                     }
-                                    className="hover:bg-tab-400 hover:cursor-pointer rounded-md w-full transition-all duration-75 text-white flex py-1 px-6"
+                                    className="hover:bg-tab-400 hover:cursor-pointer rounded-md w-full transition-all duration-75 text-white flex py-1 px-5"
                                 >
                                     {/* #TODO add a popup showing the complete name of the note when mouse hover */}
-                                    <span className="truncate">
+                                    <span className="sidebar-title text-tab-100 truncate">
                                         {note.title || ""}
                                     </span>
                                 </button>
@@ -271,7 +274,7 @@ const NotebookSidebar = () => {
 
                 {/* close sidebar btn */}
                 <button
-                    className="absolute left-56 top-4 text-white bg-tab-400 p-1 rounded-xl"
+                    className="close-sidebar-btn absolute left-72 top-4 text-white bg-tab-400 p-1 rounded-xl"
                     onClick={() => setOpenNotebookSidebar(!openNotebookSidebar)}
                 >
                     <SidebarClose />
